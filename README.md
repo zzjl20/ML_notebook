@@ -2,7 +2,8 @@
 Resource :<br>
 https://developers.google.com/machine-learning/crash-course
 ## [Tensorflow play ground. ](https://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=gauss&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,2&seed=0.33934&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false&discretize_hide=false)
-
+## [CNN 解释器](https://poloclub.github.io/cnn-explainer/)
+## [神经网络初始化](https://www.deeplearning.ai/ai-notes/initialization/) 及 [中文解释](https://zhuanlan.zhihu.com/p/67149162)
 
 ## 机器学习的流程：
 构建问题。<br>
@@ -20,4 +21,10 @@ https://developers.google.com/machine-learning/crash-course
 |整体输出|比较复杂的结果输出|自然语言输出， 图片人脸识别|
 |排序|预估此结果在整体中的比重|搜索结果排序|
 
-线性模型需要上千个数据训练，神经网络需要十万级别数量级数据。不要使用机器学习来找有效特征。把所有特征都扔给模型的结果是训练出来的模型超级贵，特别复杂，而且总在一些鸡毛蒜皮的小特征上fit well。
+线性模型需要上千个数据训练，神经网络需要十万数量级数据。不要使用机器学习来找有效特征。把所有特征都扔给模型的结果是训练出来的模型超级贵，特别复杂，而且总在一些鸡毛蒜皮的小特征上fit well。设计model要直接解决问题，而不是间接，或者是问题的前置问题。<br>
+ML的输出，必须跟着决策！<br>
+## ML高难问题
+|聚类|异常检测|启发式|
+|--|--|--|
+|<img width="150" height="150" src="https://developers.google.com/machine-learning/problem-framing/images/LabeledClusters.svg"/>|<img width="150" height="150" src="https://developers.google.com/machine-learning/problem-framing/images/Anomaly.png"/>|客人买了书，是不是有可能因为他前几天刚看了这本书的书评？|
+
