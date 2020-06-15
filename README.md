@@ -12,6 +12,8 @@ https://developers.google.com/machine-learning/crash-course
 设计你的数据在模型上的input<br>
 设计一个容易使用的接口<br>
 设计一个有质量的output<br>
+澄清问题，设定目标，要解决什么问题-> 想象一下最理想的输出 -> 设定一下判断矩阵：如何判定模型成功，哪个指标来判断-> 你的output是什么？ -> 使用output，你的output可以回答什么问题？ ->这个问题，如果不用ML，使用普通编程，应该如何解决？<br>
+解构你的问题-> 从简单情况开始分析->确认数据来源->为你的建模设计数据解构->确保使用比较容易的input->有学习能力-> 考虑一下可能的偏差<br>
 |问题|描述|举例|
 |--|--|--
 |分类|预测属于N类中的哪一类|猫，狗，马，还是熊|
@@ -27,4 +29,5 @@ ML的输出，必须跟着决策！<br>
 |聚类|异常检测|启发式|
 |--|--|--|
 |<img width="150" height="150" src="https://developers.google.com/machine-learning/problem-framing/images/LabeledClusters.svg"/>|<img width="150" height="150" src="https://developers.google.com/machine-learning/problem-framing/images/Anomaly.png"/>|客人买了书，是不是有可能因为他前几天刚看了这本书的书评？|
-
+## 机器学习概念术语
+样本， 特征，标签。样本是要处理的数据，可以写作
