@@ -58,7 +58,19 @@ f(x,y) = 4+(x-2)<sup>2</sup>+2y<sup>2</sup>,它是一个山谷一样的曲面：
 ## Tensorflow
 Tensorflow是一个可以构建机器学习的平台。
 ![](./pics/TFHierarchy.svg)
+<br>高层API易于理解，而且方便使用，但是不够灵活，编程时可能会不能满足特定需求。所以编程时应该尽可能从高级API入手，先让程序运转起来。当遇到需要微调时，再下沉一层，调整具体细节。<br>
+**tf.estimator API**<br>
+tf.estimator API在最顶层。大部分时候都使用这个。tf.estimator所做的一切，都可以用较低级的Tensorflow完成，但是tf.estimator的代码更简介。tf.estimator 与 scikit-learn API（python的一个扩展包）兼容。<br>
+**使用Tensorflow做线性回归**<br>
+```
+import tensorflow as tf
 
+# Set up a linear classifier.
+classifier = tf.estimator.LinearClassifier()
 
+# Train the model on some example data.
+classifier.train(input_fn=train_input_fn, steps=2000)
 
-
+# Use it to predict.
+predictions = classifier.predict(input_fn=predict_input_fn)
+```
