@@ -4,6 +4,7 @@ https://developers.google.com/machine-learning/crash-course
 ## [Tensorflow play ground. ](https://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=gauss&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,2&seed=0.33934&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false&discretize_hide=false)
 ## [CNN 解释器](https://poloclub.github.io/cnn-explainer/)
 ## [神经网络初始化](https://www.deeplearning.ai/ai-notes/initialization/) 及 [中文解释](https://zhuanlan.zhihu.com/p/67149162)
+[markdown编辑器](https://pandao.github.io/editor.md/)
 
 ## 机器学习的流程：
 构建问题。<br>
@@ -75,4 +76,4 @@ classifier.train(input_fn=train_input_fn, steps=2000)
 # Use it to predict.
 predictions = classifier.predict(input_fn=predict_input_fn)
 ```
-使用anaconda安装tensorflow:<br>
+[使用conda安装tensorflow](https://docs.anaconda.com/anaconda/user-guide/tasks/tensorflow/)<br>
