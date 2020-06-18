@@ -6,6 +6,10 @@ https://developers.google.com/machine-learning/crash-course
 ## [神经网络初始化](https://www.deeplearning.ai/ai-notes/initialization/) 及 [中文解释](https://zhuanlan.zhihu.com/p/67149162)
 [markdown编辑器](https://pandao.github.io/editor.md/)
 
+**普通正常编程：**
+编写规则。数据输入程序之后按规则得到结果。<br>
+**机器学习编程：**
+给出输入和结果，让机器自己学习规则。得到规则之后，再输入新数据得到结果。
 ## 机器学习的流程：
 构建问题。<br>
 找一下已经上标的数据集<br>
@@ -76,4 +80,8 @@ classifier.train(input_fn=train_input_fn, steps=2000)
 # Use it to predict.
 predictions = classifier.predict(input_fn=predict_input_fn)
 ```
-[使用conda安装tensorflow](https://docs.anaconda.com/anaconda/user-guide/tasks/tensorflow/)<br>
+[使用conda安装tensorflow](https://docs.anaconda.com/anaconda/user-guide/tasks/tensorflow/)<br>Tensorflow部分弃了谷歌的教程，因为它还在用v1.2的版本，一些命令在目前最新版本2.0已经弃用了。使用[Tensorflow官网的教程](https://www.tensorflow.org/tutorials)来学习。（若是想使用tensorflow 1.x版本，使用tf.compact.v1。）(继续弃用，因为教程太短)<br>
+Keras是一个由python编写的开源神经网络库，由于特别好使，所以2017年被Tensorflow收到核心库中。不过独立的Keras仍然存在。似乎tf.keras比独立的keras更新与功能都更快一些。
+http://c.biancheng.net/tensorflow/
+https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/
+http://www.tensorfly.cn/tfdoc/tutorials/overview.html
