@@ -81,7 +81,8 @@ classifier.train(input_fn=train_input_fn, steps=2000)
 predictions = classifier.predict(input_fn=predict_input_fn)
 ```
 [使用conda安装tensorflow](https://docs.anaconda.com/anaconda/user-guide/tasks/tensorflow/)<br>Tensorflow部分弃了谷歌的教程，因为它还在用v1.2的版本，一些命令在目前最新版本2.0已经弃用了。使用[Tensorflow官网的教程](https://www.tensorflow.org/tutorials)来学习。（若是想使用tensorflow 1.x版本，使用tf.compact.v1。）(继续弃用，因为教程太短)<br>
-Keras是一个由python编写的开源神经网络库，由于特别好使，所以2017年被Tensorflow收到核心库中。不过独立的Keras仍然存在。似乎tf.keras比独立的keras更新与功能都更快一些。
-http://c.biancheng.net/tensorflow/
-https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/
-http://www.tensorfly.cn/tfdoc/tutorials/overview.html
+Keras是一个由python编写的开源神经网络库，由于特别好使，所以2017年被Tensorflow收到核心库中。不过独立的Keras仍然存在。似乎tf.keras比独立的keras更新与功能都更快一些。<br>
+http://c.biancheng.net/tensorflow/<br>
+https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/<br>
+http://www.tensorfly.cn/tfdoc/tutorials/overview.html<br>
+感觉目前这些教程都不是很好。打算从头写一个简单的神经网络加深理解。
