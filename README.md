@@ -1,5 +1,5 @@
 # ML_notebook
-<img width="150" src = "https://pic4.zhimg.com/80/v2-cde5ae4066b5e3b7899410039a2d7937_1440w.jpg"><br>
+<img src = "https://pic4.zhimg.com/80/v2-cde5ae4066b5e3b7899410039a2d7937_1440w.jpg"><br>
 Resource :<br>
 https://developers.google.com/machine-learning/crash-course
 ## [Tensorflow play ground. ](https://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=gauss&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,2&seed=0.33934&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false&discretize_hide=false)
