@@ -1,5 +1,9 @@
 # ML_notebook
 <img src = "https://pic4.zhimg.com/80/v2-cde5ae4066b5e3b7899410039a2d7937_1440w.jpg"><br>
+人工智能有3要素：数据，算法，算力。这三个之间什么关系？我认为并没有主次之分，他们应该有各自的目标，对应不同的问题，而解决三个不同的问题就解决了人工智能。<br>
+数据是最基本的。数据的作用是描述问题。如何描述一个问题？将这个问题外在具体化成一个一个的数据。数据对应问题，有一个最小信息量的限制。即，数据携带的信息量有多少，才能完整的描述一个问题？打个比方，想要描述一条直线，那么可以给一大堆点的数据(x,y)。这些点的集合就可以表述一条直线了。不过，但是最少必须给2个点，才能描述一条直线。反过来说，只给两个点，不论使用什么样的算法，用多高的算力，最多也只能算出直线。这里两个点就是直线这一问题的最少数据量。少于这个数据量就不可能成功描述问题。<br>
+然后是算法。算法的作用是让计算机（人工智能）理解数据，消化吸收信息的模式，并处理。算法之于数据，同样有一个最小复杂度的问题。我之前学到的算法复杂度，包含了空间复杂度和时间复杂度，其实这里的复杂度还应该包含模型选用不同模型带来的，模型本身的复杂度。之前的例子是：某个问题，一个for循环就没法解决，各种算法都必须遍历两次才行。学了神经网络之后，再将其具体化一些：神经网络有中间层，可以包含很多隐藏层，而每一层又可以包含数量不等的节点。现实中编程可以发现，越是层数多，越是包含节点多，越可以拟合复杂的模型。一个模式，用很多中间层，每层使用很多节点，会将其拟合的很好。然后逐渐降低每层的节点数，或者减少层数量，会发现拟合的结果逐渐变差。当减少到某一界限之后，减少一个节点，或者减少一层，拟合结果突然失真，完全不是之前的精度变差问题，而是结果完全不对了。好像量变引起质变那样。我将其解释为：模型的复杂度无法理解数据所包含的信息，将信息丢失而导致以此为基础的拟合完全不准。这是对算法复杂度的底线的解释：算法复杂度，要与数据匹配，只能多不能少。<br>
+最后，算力。算力的作用是将算法运行起来。可以将算法理解成引擎，算力就是汽油。烧掉算力跑算法解决问题。应该说，算力与算法之间没有限制，任何算力都能完成任何算法，只是时间长短有区别。如果硬要说某算法有低限，低于这个底线就跑不动，那可能就是这个算法所要求的加减乘除的次数吧。算法只要能放在电脑上运行，就能分解成底端的寄存器加法器操作，足够时间肯定能做完。或者：算力=TFLOPS*time<br>
 Resource :<br>
 https://developers.google.com/machine-learning/crash-course
 ## [Tensorflow play ground. ](https://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=gauss&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,2&seed=0.33934&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false&discretize_hide=false)
