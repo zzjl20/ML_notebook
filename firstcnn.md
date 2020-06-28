@@ -1,4 +1,7 @@
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 我写的第一个神经网络，不过并没有完成。我有个问题没法解决：误差总是固定在0.25左右，从不变化。我不知道该怎么办。但是暂时先把已经写的东西记下来吧。<br>
 ### 建立模型： 
 <img src = "./pics/autodraw 6_28_2020.png"><br>
-其中
+其中每个节点： <br>
+
+$${}^*x^*$$
