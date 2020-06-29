@@ -97,4 +97,4 @@ Keras是一个由python编写的开源神经网络库，由于特别好使，所
 http://c.biancheng.net/tensorflow/<br>
 https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/<br>
 http://www.tensorfly.cn/tfdoc/tutorials/overview.html<br>
-感觉目前这些教程都不是很好。打算从头写一个简单的神经网络加深理解。
+感觉目前这些教程都不是很好。打算从头写一个简单的神经网络加深理解。具体过程[这里](./firstcnn.md)
