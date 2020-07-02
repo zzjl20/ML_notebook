@@ -80,4 +80,58 @@ class neuron:
         o4,h4 = self.n4.feedforward([o1,o2,o3])
         return (o1,o2,o3,o4,h1,h2,h3,h4)
  ```
- 暂时写这么多。cnn的train函数好像有误，我去重写.(废了好几天功夫知道自己错在哪了。改变**原先的weight时候，要weight-=， 而不是weight=**,不然的话，新weight永远是适合当前小样本，换下个训练样本，weight又适合下一个，不适合本次的了。同时，改写了上面的代码，更精炼，也更难懂了。)<br>
+ 暂时写这么多。cnn的train函数好像有误，我去重写.(废了好几天功夫知道自己错在哪了。改变**原先的weight时候，要weight-=， 而不是weight=**,不然的话，新weight永远是适合当前小样本，换下个训练样本，weight又适合下一个，不适合本次的了。同时，改写了上面的代码，更精炼，也更难懂了。)接着往下写，把train代码写完：<br>
+ ```
+ # 把myCNN的训练代码写完：
+ class myCNN:
+    def __init__(self):
+        self.n1 = neuron(4)
+        self.n2 = neuron(4)
+        self.n3 = neuron(4)
+        self.n4 = neuron(3)
+    def feedforward(self,x):
+        h1,o1 = self.n1.feedforward(x)
+        h2,o2 = self.n2.feedforward(x)
+        h3,o3 = self.n3.feedforward(x)
+        h4,o4 = self.n4.feedforward([o1,o2,o3])
+        return o4
+    def train(self, data, all_y_trues):
+        errorlist=[]    # 记录每次调整之后的误差，应该是随着训练的进行，逐步变小
+        learn_rate = 0.1  #学习速率，如果发生了一步梯度过大越过了极值的情况，就是步子太大，应该调低此项
+        epochs = 200    # 循环次数。次数越多，模拟的越好，需要的计算量越大
+        for epoch in range(epochs):
+            for x, y_true in zip(data, all_y_trues):
+                h1,o1 = self.n1.feedforward(x)
+                h2,o2 = self.n2.feedforward(x)
+                h3,o3 = self.n3.feedforward(x)
+                h4,o4 = self.n4.feedforward([o1,o2,o3])
+                y_preds = o4
+                
+                dMSE_do4 = -2*(y_true-o4)    #从这往下的 w1~w4的调整，要仔细阅读
+                w4 = [dMSE_do4 * deriv_sigmoid(h4) * m for m in [o1,o2,o3,1]]
+                
+                dMSE_do1 = dMSE_do4 * deriv_sigmoid(h4) * self.n4.weight[0]
+                w1 = [dMSE_do1 * deriv_sigmoid(h1) * m for m in np.append(x,1)] # append(x,1)会在x之后加一个1，用来点乘bias
+                dMSE_do2 = dMSE_do4 * deriv_sigmoid(h4) * self.n4.weight[1]
+                w2 = [dMSE_do2 * deriv_sigmoid(h2) * m for m in np.append(x,1)]
+                dMSE_do3 = dMSE_do4 * deriv_sigmoid(h4) * self.n4.weight[3]
+                w3 = [dMSE_do3 * deriv_sigmoid(h3) * m for m in np.append(x,1)]
+                
+                self.n1.adjust(np.dot(learn_rate, w1))
+                self.n2.adjust(np.dot(learn_rate, w2))
+                self.n3.adjust(np.dot(learn_rate, w3))
+                self.n4.adjust(np.dot(learn_rate, w4))
+            if epoch % 10 == 0:
+                y_preds = np.apply_along_axis(self.feedforward, 1, data)
+                loss = mse_loss(all_y_trues, y_preds)
+                print("Epoch %d loss: %.3f" % (epoch, loss))
+                errorlist.append(loss)
+        return(errorlist)
+ ```
+mycnn类，有3个函数：1） 初始化。2） feedforward（）用来预测。3） train（）用来训练。然后，我来看看，这个模型能做什么。200次循环，模型的<br>
+ ```
+mynetwork = myCNN()
+el=mynetwork.train(train_x, train_y)
+plt.plot(el)
+plt.show()
+ ```
