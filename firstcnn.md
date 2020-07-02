@@ -33,7 +33,7 @@ import random     #用来打乱数据
 from matplotlib import pyplot as plt # 用来画图，查看误差变化
 
 sample = sklearn.datasets.load_iris()
-datas = sample.data[:100] #由于我还不会/不知道 训练3个目标，线从2个目标练起
+datas = sample.data[:100] #由于我还不会/不知道 训练3个目标，先从2个目标练起
 targets = sample.target[:100] #o4的值取0和1，可以表示2个物种。所以就用前100个数据
 a = [x  for x in range(100)]
 random.shuffle(a)
