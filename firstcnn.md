@@ -57,17 +57,13 @@ def deriv_sigmoid(x):
 ```
 class neuron:
     def __init__(self, n):  #n表示可以接受几个x做输入
-        w = [np.random.normal() for _ in range(n)]  #随机初始化w
-        b = np.random.normal()    #和b
-        self.weight = w
-        self.bias = b
+        self.weight = [np.random.normal() for _ in range(n+1)]  #随机初始化w和b，b就是weight的最后一个量，待会做点乘时候最后点乘一个“1”就行
      def feedforward(self, x):      # 一个节点最基本的功能，将4个x运算成一个输出。
-        result = np.dot(x,self.weight) + self.bias
-        #print("calculate: ", x ,self.weight, self.bias, result)
-        return (sigmoid(result), result)          #要记录o和h，作为之后反向推要用
-     def adjust(self, w,b):  #提供调整w和b的函数
-        self.weight = w
-        self.bias = b      
+        xx = np.appdn(x,1)
+        h,o =np.dot(xx, self.weight)
+        return (h,o)          #要记录o和h，作为之后反向推要用
+     def adjust(self, w):  #提供调整w和b的函数
+        self.weight = np.subtract(self.weight, w) 
  ```
  有了节点，可以做网络了。
  ```
@@ -78,10 +74,10 @@ class neuron:
         self.n3 = neuron(4)
         self.n4 = neuron(3)
     def feedforward(self, x):
-        o1,h1 = self.n1.feedforward(x) # 
+        o1,h1 = self.n1.feedforward(x)  
         o2,h2 = self.n2.feedforward(x)
         o3,h3 = self.n3.feedforward(x)
         o4,h4 = self.n4.feedforward([o1,o2,o3])
         return (o1,o2,o3,o4,h1,h2,h3,h4)
  ```
- 暂时写这么多。cnn的train函数好像有误，我去重写.<br>
+ 暂时写这么多。cnn的train函数好像有误，我去重写.(废了好几天功夫知道自己错在哪了。改变**原先的weight时候，要weight-=， 而不是weight=**,不然的话，新weight永远是适合当前小样本，换下个训练样本，weight又适合下一个，不适合本次的了。同时，改写了上面的代码，更精炼，也更难懂了。)<br>
