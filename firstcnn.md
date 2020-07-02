@@ -128,10 +128,18 @@ class neuron:
                 errorlist.append(loss)
         return(errorlist)
  ```
-mycnn类，有3个函数：1） 初始化。2） feedforward（）用来预测。3） train（）用来训练。然后，我来看看，这个模型能做什么。200次循环，模型的<br>
+mycnn类，有3个函数：1） 初始化。2） feedforward（）用来预测。3） train（）用来训练。然后，我来看看，这个模型能做什么。200次循环，模型的误差下降到0.001<br>
  ```
 mynetwork = myCNN()
 el=mynetwork.train(train_x, train_y)
 plt.plot(el)
 plt.show()
  ```
+<img src="./pics/loss_rate.png"><br>
+用剩下的test_x和test_y来看一下预测效果如何： 准确率100%<br>
+ ```
+test_pred = np.apply_along_axis(mynetwork.feedforward, 1, test_x)
+for i in range(len(test_y)):
+    print("predict: %.3f\t real: %d" % (test_pred[i], test_y[i]))
+ ```
+ 神经网络完成。
