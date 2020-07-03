@@ -16,6 +16,9 @@ https://developers.google.com/machine-learning/crash-course
 ## [Tensorflow play ground. ](https://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=gauss&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,2&seed=0.33934&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false&discretize_hide=false)
 ## [CNN 解释器](https://poloclub.github.io/cnn-explainer/)
 ## [神经网络初始化](https://www.deeplearning.ai/ai-notes/initialization/) 及 [中文解释](https://zhuanlan.zhihu.com/p/67149162)
+## 免费的online GPU资源
+https://www.kaggle.com/<br>
+https://medium.com/deep-learning-turkey/google-colab-free-gpu-tutorial-e113627b9f5d<br>
 [markdown编辑器](https://pandao.github.io/editor.md/)
 
 **普通正常编程：**
