@@ -1,4 +1,5 @@
-## [Google Colab简要教程](https://medium.com/deep-learning-turkey/google-colab-free-gpu-tutorial-e113627b9f5d)
+## [Google Colab简要教程](https://medium.com/deep-learning-turkey/google-colab-free-gpu-tutorial-e113627b9f5d) [(中文翻译)](https://juejin.im/post/5c05e1bc518825689f1b4948)
+中文翻译
 Google Colab是谷歌云硬盘上的一个服务，他可以让云硬盘像本地一样，运行类似jupyter lab一样的界面，运行ipynb程序。更重要的是，Google Colab可以免费使用云GPU或者TPU，还预装了tensorflow最新版。下面就记录几个重要的命令<br>
 #### 如何开始一个ipynb的项目？ ####
 "New" -> "More" -> "Connect more Apps" -> search Google Colab. 然后"New" -> "More" -> “Google Colabatory”就可以开始了。<br>
