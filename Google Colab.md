@@ -58,10 +58,10 @@ print('GPU speedup over CPU: {}x'.format(int(cpu_time/gpu_time)))
 ```
 Time (s) to convolve 32x7x7x3 filter over random 100x100x100x3 images (batch x height x width x channel). Sum of ten runs.
 CPU (s):
-3.862475891000031
+2.875705303999993
 GPU (s):
-0.10837535100017703
-GPU speedup over CPU: 35x
+0.05012470500000177
+GPU speedup over CPU: 57x
 ```
 比较重要的功能还有，就不一条一条翻译了：<br>
 安装包（!pip）<br>
