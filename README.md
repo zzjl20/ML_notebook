@@ -142,6 +142,64 @@ aa.name, aa.trainable # Variable类型张量的属性
 待优化张量可视为普通张量的特殊类型，普通张量其实也可以通过 GradientTape.watch()方 法临时加入跟踪梯度信息的列表，**从而支持自动求导功能。**<br>
 #### 创建张量
 记得函数 tf.convert_to_tensor(), tf.constant(), tf.zeros([]), tf.ones([]), tf.zeros_like(), tf.ones_like(), tf.fill(shape, value), tf.random.normal(shape, mean=0.0, stddev=1.0),  tf.random.uniform(shape, minval=0, maxval=None, dtype=tf.float32), 这些可以创建张量，全零/全1张量，正太分布张量，平均分布张量等，具体看[这本书](https://github.com/dragen1860/Deep-Learning-with-TensorFlow-book)的第四章<br>
-循环时用的range函数，用tf.range()来替代,创建序列。
+循环时用的range函数，用tf.range()来替代,创建序列。<br>
 **张量的典型应用**<br>
-标量,shape=[]
+标量,shape=[]。标量的一些典型用途是误差值的表示、各种测量指标的表示，比如准确度(Accuracy， 简称 acc)，精度(Precision)和召回率(Recall)等。<br>
+向量， shape = [n]。 向量一般用来表示偏置量***b***.<br> 
+矩阵， shape = [m,n]。 如果一个节点的权值w<sub>i</sub>,可以用向量***w<sub>i</sub>***,那么这一层所有n个节点的权值就可以看成矩阵***W***.
+```
+x = tf.random.normal([2,4])
+w = tf.ones([4,3])
+b = tf.zeros([3])
+o = x@w+b  # X@W+b运算
+```
+激活函数为空。一般地，𝜎(𝑿@𝑾 + 𝒃)网络层称为全连接层，在 TensorFlow 中可以通过 Dense 类直接实现，特 别地，当激活函数𝜎为空时，全连接层也称为线性层.
+```
+fc = layers.Dense(3) # 定义全连接层的输出节点为3
+fc.build(input_shape=(2,4)) # 定义全连接层的输入节点为 4 
+fc.kernel # 查看权值矩阵W
+```
+三维张量：shape有2个以上的值。典型应用是表示序列信号: 𝑿 = [𝑏, sequence len, feature len] .𝑏表示序列信号的数量，sequence len 表示序列信号在时间维度上的采样点数或步数，
+feature len 表示每个点的特征长度。<br>
+四维张量, 在卷积神经网络中应用非常广泛，它用于保存特征图(Feature maps)数据，格式一般定义为*[𝑏, h, w, 𝑐]。 其中𝑏表示输入样本的数量，h/ 分别表示特征图的高/宽，𝑐表示特征图的通道数，部分深度学习框架也会使用[𝑏, 𝑐, h, c]格式的特征图张量，例如PyTorch。
+#### 索引与切片
+通过索引与切片操作可以提取张量的部分数据，它们的使用频率非常高。<br>
+
+```
+# 索引
+x = tf.random.normal([4,32,32,3]) # 创建4D张量。表示4个样本，每个样本是32*32的图片，每个像素点有红黄蓝3个颜色。
+
+In [51]:x[0] # 程序中的第一的索引号应为0，容易混淆，不过不影响理解
+Out[51]:<tf.Tensor: id=379, shape=(32, 32, 3), dtype=float32, numpy= array([[[ 1.3005302 , 1.5301839 , -0.32005513],
+[-1.3020388 , 1.7837263 , -1.0747638 ], ...
+[-1.1092019 , -1.045254 , -0.4980363 ],
+[-0.9099222 , 0.3947732 , -0.10433522]]], dtype=float32)>
+
+In [52]:x[0][1]  # 选取第1张图片，第2行
+Out[52]:
+<tf.Tensor: id=388, shape=(32, 3), dtype=float32, numpy= array([[ 4.2904025e-01, 1.0574218e+00, 3.1540772e-01],
+[ 1.5800388e+00, -8.1637271e-02, 6.3147342e-01], ...,
+[ 2.8893018e-01, 5.8003378e-01, -1.1444757e+00],
+[ 9.6100050e-01, -1.0985689e+00, 1.0827581e+00]], dtype=float32)>
+
+In [53]: x[0][1][2] # 选取第1张图片，第2行，第3列
+Out[53]:
+<tf.Tensor: id=401, shape=(3,), dtype=float32, numpy=array([-0.55954427, 0.14497331, 0.46424514], dtype=float32)>
+
+In [54]:x[2][1][0][1]  # 选取第1张图片，第2行，第3列,第2颜色通道。
+Out[54]:
+<tf.Tensor: id=418, shape=(), dtype=float32, numpy=-0.84922135>
+
+In [55]: x[1,9,2]  # 写[𝑖][𝑗]. . . [𝑘]的方式书写不方便，可以直接写[𝑖, 𝑗, ... , 𝑘]
+Out[55]:
+<tf.Tensor: id=436, shape=(3,), dtype=float32, numpy=array([ 1.7487534 , - 0.41491988, -0.2944692 ], dtype=float32)>
+```
+切片： 通过start: end: step切片方式可以方便地提取一段数据，其中 start 为开始读取位置的索引，end 为结束读取位置的索引(不包含 end 位)，step 为采样步长。
+```
+In [56]: x[1:3] # 读取2，3张图片
+Out[56]:
+<tf.Tensor: id=441, shape=(2, 32, 32, 3), dtype=float32, numpy=
+array([[[[ 0.6920027 , 0.18658352, 0.0568333 ], [ 0.31422952, 0.75933754, 0.26853144],
+[ 2.7898 , -0.4284912 , -0.26247284],...
+```
+
