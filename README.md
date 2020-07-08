@@ -142,4 +142,6 @@ aa.name, aa.trainable # Variable类型张量的属性
 待优化张量可视为普通张量的特殊类型，普通张量其实也可以通过 GradientTape.watch()方 法临时加入跟踪梯度信息的列表，**从而支持自动求导功能。**<br>
 #### 创建张量
 记得函数 tf.convert_to_tensor(), tf.constant(), tf.zeros([]), tf.ones([]), tf.zeros_like(), tf.ones_like(), tf.fill(shape, value), tf.random.normal(shape, mean=0.0, stddev=1.0),  tf.random.uniform(shape, minval=0, maxval=None, dtype=tf.float32), 这些可以创建张量，全零/全1张量，正太分布张量，平均分布张量等，具体看[这本书](https://github.com/dragen1860/Deep-Learning-with-TensorFlow-book)的第四章<br>
-循环时用的range函数，用tf.range()来替代。
+循环时用的range函数，用tf.range()来替代,创建序列。
+**张量的典型应用**<br>
+标量,shape=[]
