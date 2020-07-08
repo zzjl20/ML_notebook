@@ -100,13 +100,46 @@ Keras是一个由python编写的开源神经网络库，由于特别好使，所
 https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/<br>
 https://zhuanlan.zhihu.com/p/59507137<br>
 https://zhuanlan.zhihu.com/p/79406360<br>
-https://github.com/dragen1860/Deep-Learning-with-TensorFlow-book<br>
 感觉目前这些教程都不是很好。打算从头写一个简单的神经网络加深理解。具体过程[这里](./firstcnn.md)<br>
 我对[使用组合特征进行机器学习](https://developers.google.com/machine-learning/crash-course/feature-crosses/encoding-nonlinearity)可以取得更好训练结果的总结经验： x1，x2分别表示了数据水平方向和竖直方向的特征，使用了x3=x1 * x2的时候，相当于引入了新的信息，**水平方向和竖直方向之间的关系**， 因为模型得到了新的信息，所以训练效果更好。使用组合特征，可以反应特征之间的联系。或许联系才是问题的关键特征。能反应问题的特征值，将对训练模型特别有帮助，而不能很好反应问题的特征值，即使考虑进模型中，训练出来的模型，权值也很低，和不考虑他一个效果。<br>
 
 我好像搞错了一件事情，之前我认为模型的复杂度应该越高越好，因为低复杂度的模型不足以解决数据问题，而高复杂度带来的缺点只有计算量过大而已。不过似乎真实不是这样。高复杂度的模型有时候还过拟合，预测效果不好。这样看来，整个神经网络的过程都要很谨慎：1）选数据要谨慎，要除去噪音，要选能代表问题的数据，奇异点什么的都要洗去，不要选不具有代表性的数据。2）选择训练特征要谨慎，有时候要选x，y，有时候要选xy，有时候要选x<sup>2</sup>和y<sup>2</sup>,选择单一特征，还是组合特征也有学问。3）选择模型要谨慎，不正确的模型无论什么数据上去，结果都很差。4）模型复杂度要谨慎，复杂度低了，不能解析问题。复杂度高了，过拟合。<br>
 
 然后，就被介绍了一个L2正则化来平衡复杂度过度的情况。简单来说，设定一个代价函数，与损失函数一并考虑。每增加一个参数，就要增加一定的代价。增加参数个数会增加代价，但是也会降低损失。将参数的代价和损失一并考虑，可以平衡出一个既可以接受的误差损失，又不是很复杂的参数模型（防止过拟合）.<br>
-
-
-
+### 找到了很好的[tensorflow基础教程](https://github.com/dragen1860/Deep-Learning-with-TensorFlow-book)
+#### 基本数据类型和基本概念
+数据分为数值，字符串，布尔。基本概念：标量(Scalar)，向量(Vector)，矩阵(Matrix)，tf成员属性.shape特征，张量（Tensor）。一般把标量，向量，矩阵也看成张量，只是这几个的纬度（shape）都很小罢了。张量是tensorflow的主要数据类型。各种张量的赋值如下：
+```
+a0 = 1.2 # python语言方式创建标量
+a1 = tf.constant(1.2) # TF方式创建标量 
+print(type(a), type(a1), tf.is_tensor(a1))
+a2 = tf.constant([1,2.,3.3]) # TF的向量
+x = a2.numpy()  # 将一个TF向量/张量变为numpy.array格式，方便向其他函数传递
+a3 = tf.constant([1.2]) # 这是一个1*1的向量，用.shape和type（）查看一下和a1的区别
+a4 = tf.constant([[1,2],[3,4]])  # 2*2 矩阵
+a5 = tf.constant([[[1,2],[3,4]],[[5,6],[7,8]]]) # 创建3维张量
+```
+a6 = tf.constant('Hello, Deep Learning.') 将创建tf的字符串，可以使用tf.strings中的函数处理，比如lower()， join(),split(),length()等等。<br>
+a7 = tf.constant([True, False]) # 创建布尔类型向量。要注意，TF的布尔型变量与python自带的布尔型不能比较。可以把a7转变成numpy()，再比较。<br>
+#### TF的数据精度
+有tf.int16、tf.int32、tf.int64、tf.float16、tf.float32、 tf.float64， tf.float64即tf.double。在保存张量时，指定dtype成员属性即可强制保存成想要的精度。例如：<br>
+a4 = tf.constant([[1,2],[3,4]], dtype =tf.int32) <br>
+同理也可用a4.dtype查看张量的精度。一般情况下tf.int32 和 tf.float32 可满足大部分需要。<br>
+使用cast()可以转换精度。注意不要溢出。也可用于布尔型和整形的转换<br>
+#### 待优化张量
+为了区分需要计算梯度信息的张量与不需要计算梯度信息的张量，TensorFlow 增加了 一种专门的数据类型来支持梯度信息的记录:tf.Variable。tf.Variable 类型在普通的张量类 型基础上添加了 name，trainable 等属性来支持计算图的构建。由于梯度运算会消耗大量的 计算资源，而且会自动更新相关参数，对于不需要的优化的张量，如神经网络的输入𝑿， 不需要通过 tf.Variable 封装;相反，对于需要计算梯度并优化的张量，如神经网络层的𝑾 和𝒃，需要通过 tf.Variable 包裹以便 TensorFlow 跟踪相关梯度信息。
+```
+a = tf.constant([-1, 0, 1, 2]) # 创建 TF 张量 
+aa = tf.Variable(a) # 转换为 Variable 类型 
+aa.name, aa.trainable # Variable类型张量的属性
+```
+也可直接用Variable()函数直接创建优化张量：
+```
+a = tf.constant([-1, 0, 1, 2]) # 创建 TF 张量 
+aa = tf.Variable(a) # 转换为 Variable 类型 
+aa.name, aa.trainable # Variable类型张量的属性
+```
+待优化张量可视为普通张量的特殊类型，普通张量其实也可以通过 GradientTape.watch()方 法临时加入跟踪梯度信息的列表，**从而支持自动求导功能。**<br>
+#### 创建张量
+记得函数 tf.convert_to_tensor(), tf.constant(), tf.zeros([]), tf.ones([]), tf.zeros_like(), tf.ones_like(), tf.fill(shape, value), tf.random.normal(shape, mean=0.0, stddev=1.0),  tf.random.uniform(shape, minval=0, maxval=None, dtype=tf.float32), 这些可以创建张量，全零/全1张量，正太分布张量，平均分布张量等，具体看[这本书](https://github.com/dragen1860/Deep-Learning-with-TensorFlow-book)的第四章<br>
+循环时用的range函数，用tf.range()来替代。
