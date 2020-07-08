@@ -127,7 +127,7 @@ a4 = tf.constant([[1,2],[3,4]], dtype =tf.int32) <br>
 同理也可用a4.dtype查看张量的精度。一般情况下tf.int32 和 tf.float32 可满足大部分需要。<br>
 使用cast()可以转换精度。注意不要溢出。也可用于布尔型和整形的转换<br>
 #### 待优化张量
-为了区分需要计算梯度信息的张量与不需要计算梯度信息的张量，TensorFlow 增加了 一种专门的数据类型来支持梯度信息的记录:tf.Variable。tf.Variable 类型在普通的张量类 型基础上添加了 name，trainable 等属性来支持计算图的构建。由于梯度运算会消耗大量的 计算资源，而且会自动更新相关参数，对于不需要的优化的张量，如神经网络的输入𝑿， 不需要通过 tf.Variable 封装;相反，对于需要计算梯度并优化的张量，如神经网络层的𝑾 和𝒃，需要通过 tf.Variable 包裹以便 TensorFlow 跟踪相关梯度信息。
+为了区分需要计算梯度信息的张量与不需要计算梯度信息的张量，TensorFlow 增加了 一种专门的数据类型来支持梯度信息的记录:tf.Variable。tf.Variable 类型在普通的张量类型基础上添加了 name，trainable 等属性来支持计算图的构建。由于梯度运算会消耗大量的 计算资源，而且会自动更新相关参数，对于不需要的优化的张量，如神经网络的输入𝑿， 不需要通过 tf.Variable 封装;相反，对于需要计算梯度并优化的张量，如神经网络层的𝑾 和𝒃，需要通过 tf.Variable 包裹以便 TensorFlow 跟踪相关梯度信息。
 ```
 a = tf.constant([-1, 0, 1, 2]) # 创建 TF 张量 
 aa = tf.Variable(a) # 转换为 Variable 类型 
@@ -140,6 +140,7 @@ aa = tf.Variable(a) # 转换为 Variable 类型
 aa.name, aa.trainable # Variable类型张量的属性
 ```
 待优化张量可视为普通张量的特殊类型，普通张量其实也可以通过 GradientTape.watch()方 法临时加入跟踪梯度信息的列表，**从而支持自动求导功能。**<br>
+我觉得，TF支持的自动求导功能，才有了那么一点“电脑是人类智慧的延伸”的感觉。锤子，扳手是手的延伸。而自动求导能替代脑力的繁琐思考，这才是只能的体现。for循环之类的虽然也是节约了脑力，还是太低级了。<br>
 #### 创建张量
 记得函数 tf.convert_to_tensor(), tf.constant(), tf.zeros([]), tf.ones([]), tf.zeros_like(), tf.ones_like(), tf.fill(shape, value), tf.random.normal(shape, mean=0.0, stddev=1.0),  tf.random.uniform(shape, minval=0, maxval=None, dtype=tf.float32), 这些可以创建张量，全零/全1张量，正太分布张量，平均分布张量等，具体看[这本书](https://github.com/dragen1860/Deep-Learning-with-TensorFlow-book)的第四章<br>
 循环时用的range函数，用tf.range()来替代,创建序列。<br>
