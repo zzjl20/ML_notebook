@@ -217,7 +217,7 @@ array([[[[ 0.6920027 , 0.18658352, 0.0568333 ], [ 0.31422952, 0.75933754, 0.2685
 x = tf.random.normal([2,32,32,3])
 tf.transpose(x,perm=[0,3,1,2]) # 交换维度
 ```
-复制纬度： `tf.tile(x, multiples)`<br>
+复制维度： `tf.tile(x, multiples)`<br>
 Broadcasting：广播机制。可以复制一整个张量。实际上是先占住茅坑，等需要时候再拉屎。实际运行broadcasting可以因为运算约分等免去大部分的数据真实复制，只有不能简化，需要最后运算时候，再复制真实数据。这样就减少了运算代价。`tf.broadcast_to(x, new_shape)`可以将x拓展为新的shape，比如：
 ```
 A = tf.random.normal([32,1]) # 创建矩阵
@@ -231,4 +231,53 @@ a = tf.random.normal([4,3,28,32])
 b = tf.random.normal([4,3,32,2])
 a@b # 批量形式的矩阵相乘
 ```
+**总结一下第四章学到的TF基本语法：**<br>
+TF的数据中,dtype表示数据精度，shape表示数据纬度。通过.dtype和.shape访问。也可以在初始化时候指定dtype<br>
+**数据类型:** 数值（int 16/32/64, float 16/32/64）, 字符串， 布尔
+| 概念 | 特征  | 命令 | 例子 | 说明 |
+|  ----  | ----  | ----  | ----  | ---- |
+| 标量（scalar）  | shape =[] | tf.constant(1.2) | 1.2| | 
+| 向量（vector）  | shape =[n] | tf.constant([1,2.,3.3])|[10, 2.0, 3.3]| |
+| 矩阵（matrix）  | shape =[m,n] | tf.constant([[1,2],[3,4]])|[[1,2],[3,4]]| |
+| 张量（tensor）  | shape =[m,n,o,....] | tf.constant([[[1,2],[3,4]],[[5,6],[7,8]]])|[[[1,2],[3,4]],[[5,6],[7,8]]]|标量，向量，矩阵都可以看成张量 |
+| 布尔型（bool）  |将上述张量赋值为布尔变量，只有True或False| tf.constant(True) | True| | 
+
+**TF的命令** 
+| 概念 | 命令 | 例子 | 说明 |
+|  ----  | ----  | ----  | ---- |
+| 判断是否是TF张量 |tf.is_tensor（a） | |返回普通的True， False， 而不是TF的布尔型 |
+| 精度转换 | tf.cast(a, tf.double) || 将原本dtype= float32的a张量转化为float64， **注意**，布尔型也可以转变成整形|
+| 纬度转换 | tf.reshape(x, new_shape) |tf.reshape(x,[2,-1]) |参数−1表示当前轴上长度需要根据张量总元素不变的法则自动推导,总数据除以各个分量，最后剩下的就是 |
+| 增加维度 | tf.expand_dims(x, axis) | | 在指定的 axis 轴前可以插入一个新的维度, 如果axis比最高纬度（从0开始计算）还高1，那么就插在最末尾|
+| 删除维度 | tf.squeeze(x, axis)| | axis为纬度索引号 |
+| 交换维度 | tf.transpose(x, perm)| tf.transpose(x,perm=[0,3,1,2])| x原先的[0,1,2,3]变成了[0,3,1,2]|
+| 复制维度 | tf.tile(x, multiples) | | multiples 分别指 定了每个维度上面的复制倍数，对应位置为 1 表明不复制，为 2 表明新长度为原来长度的 2 倍，即数据复制一份，以此类推。若原来shape=[m,n], multiples = [a,b], 则复制后的shape= [am, bn]|
+| 待优化张量| tf.Variable(a)| | 一般，神经网络中间层𝑾 和𝒃需要优化，而输入输入𝑿则不需要优化。有name和trainable属性，是待优化张量特有的|
+| 转化成为张量 |tf.convert_to_tensor(a) | | a是数组或者普通数组，或者是Numpy Array对象。 tf.constant(a)也有同样的作用|
+| 生成全0/1张量| tf.zeros([])，tf.ones([])|tf.zeros(2,2)|会生成[[0,0],[0,0]]矩阵|
+| 转化成0/1张量| tf.zeros_like（）， tf.ones_like| tf.zeros_like（a） | 创建了和a一样纬度的全零张量 |
+| 自定义数值张量| tf.fill(shape, value)| tf.fill([2,2], 99)| 创建2行2列，元素全为99的矩阵| 
+| 创建正太分布张量| tf.random.normal(shape, mean=0.0, stddev=1.0) | | 可自定义shape， mean和stddev | 
+| 创建平均分布张量| tf.random.uniform(shape, minval=0, maxval=None, dtype=tf.float32) | | minval， maxval默认值为 \[0 ,1)|
+| 创建序列| tf.range(start, limit, delta=1) | | 默认start=0, delta = 1,从0到5的序列可以简写为tf.|
+| 广播（Broadcasting）| tf.broadcast_to(x, new_shape)| |广播机制有如下特点： 1.融合了插入纬度和复制纬度。并且是自动进行不需干预。 2. 复制纬度暂时先不复写数据，经过优化有的地方只需形式运算，待到必须计算数据时候再复写数据，节约了运算量。|
+| 加减乘除|+、 − 、 ∗ 、/ | | 已经全部重载过了| 
+| 整除，求余| //、%| | |
+| 乘方，开方| tf.pow(x, a)| | ** 重载过了。开方的话，tf.pow(x, 0.5)或x ** 0.5就可以开平方|
+| 平方，平方根 | tf.square(x)， tf.sqrt(x)| | |
+| 指数 |tf.pow(a, x) | 2 ** x|  |
+| 自然指数 | tf.exp(x)| | | 
+| 自然对数 | tf.math.log(x)  | | |
+| 任意底对数 | <img src="./pics/Screen Shot 2020-07-11 at 22.49.55.png"/>| |TF尚不支持除自然对数之外的对数。可以用换底公式 |
+| 矩阵相乘| @| | 支持Broadcasting机制。矩阵相乘是2维矩阵的相乘。A@B要保证A的最后一维要和B的第一维相通。shape = [4,28,32]与[32,16]相乘， 其实是28 * 32的矩阵与32 * 16的矩阵相乘，得到28 * 16的矩阵。所以最后的张量 shape = [4,28,16]|
+
+
+**高级API， 类** <br>
+**Dense 类** 用来实现全连接层
+```
+fc = layers.Dense(3) # 定义全连接层的输出节点为3
+fc.build(input_shape=(2,4)) # 定义全连接层的输入节点为 4
+fc.kernel # 查看权值矩阵W
+```
+
 下面开始[第二个CNN](./second_cnn.md)，用TF来试试吧。
