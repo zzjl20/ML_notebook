@@ -109,6 +109,8 @@ https://zhuanlan.zhihu.com/p/79406360<br>
 
 然后，就被介绍了一个L2正则化来平衡复杂度过度的情况。简单来说，设定一个代价函数，与损失函数一并考虑。每增加一个参数，就要增加一定的代价。增加参数个数会增加代价，但是也会降低损失。将参数的代价和损失一并考虑，可以平衡出一个既可以接受的误差损失，又不是很复杂的参数模型（防止过拟合）.<br>
 ### 找到了很好的[tensorflow基础教程](https://github.com/dragen1860/Deep-Learning-with-TensorFlow-book)
+### [tensorflow v2.2.0的官方文档](https://tensorflow.google.cn/api_docs)
+### [tensorflow民间文档](https://www.w3cschool.cn/tensorflow_python/)
 #### 基本数据类型和基本概念
 数据分为数值，字符串，布尔。基本概念：标量(Scalar)，向量(Vector)，矩阵(Matrix)，tf成员属性.shape特征，张量（Tensor）。一般把标量，向量，矩阵也看成张量，只是这几个的纬度（shape）都很小罢了。张量是tensorflow的主要数据类型。各种张量的赋值如下：
 ```
@@ -273,4 +275,5 @@ TF的数据中,dtype表示数据精度，shape表示数据纬度。通过.dtype�
 | 任意底对数 | <img src="./pics/Screen Shot 2020-07-11 at 22.49.55.png"/>| |TF尚不支持除自然对数之外的对数。可以用换底公式 |
 | 矩阵相乘| @| | 支持Broadcasting机制。矩阵相乘是2维矩阵的相乘。A@B要保证A的最后一维要和B的第一维相通。shape = [4,28,32]与[32,16]相乘， 其实是28 * 32的矩阵与32 * 16的矩阵相乘，得到28 * 16的矩阵。所以最后的张量 shape = [4,28,16]|
 | 求平均数 |tf.reduce_mean( input_tensor, axis=None, keep_dims=False, name=None, reduction_indices = None)| tf.reduce_mean(loss)| 用来降维，或者是来求tensor某一维度的均值|
+
 下面开始[第二个CNN](./second_cnn.md)，用TF来试试吧。
