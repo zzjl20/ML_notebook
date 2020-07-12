@@ -42,13 +42,13 @@ y = tf.one_hot(y, depth=10) # one-hot编码
 ```
 那么，开始向前推导，由x->w1,b1-> w2,b2-> w3,b3 -> out.out是个10维向量，与y相比可以得到误差。
 ```
-# 第一层计算，[b, 784]@[784, 256] + [256] => [b, 256] + [256] => [b,256] + [b, 256]
+# 第一层计算，[60000, 784]@[784, 256] + [256] => [60000, 256] + [256] => [60000,256] + [60000, 256]
 h1 = x@w1 + tf.broadcast_to(b1, [x.shape[0], 256]) 
 h1 = tf.nn.relu(h1) # 通过激活函数
-# 第二层计算，[b, 256] => [b, 128] 
+# 第二层计算，[60000, 256] => [60000, 128] 
 h2 = h1@w2 + b2
 h2 = tf.nn.relu(h2)
-# 输出层计算，[b, 128] => [b, 10] 
+# 输出层计算，[60000, 128] => [60000, 10] 
 out = h2@w3 + b3
 ```
 计算误差，使用MSE误差。mse = mean(sum(y-out)^2)
@@ -78,3 +78,86 @@ with tf.GradientTape() as tape:
 目前还有2个任务: 1. 将误差随着训练逐渐降低表示出来。 2.测验数据导入到网络中，看误差。<br>
 我好像明白哪里不对了。上述一个`with tf.GradientTape() as tape:`，只计算量一次，向前推导-> 得到误差-> 更新W，B，所以只是得到了一个误差。所以也没loss曲线什么。另外`tf.reduce_mean(loss)`是求平均数的意思。如果想要看到误差趋势，把上面的`with`多做几次，就是循环，就可以看到loss的变化了。 另外还有一点，lr要设置的小一点，我初始设置为0.1，结果`with`4，5遍，误差就变成无限大了。设置成0.01是底线，0，001也是可以的。<br>
 综上，一个`with`外面还要套上多次训练的循环，或者指定误差下降停止限制，才能看到loss的逐渐变小。另外lr的设置，书里也没写。~~从`with`到最后的误差下降图，整整隔了好几步，书中都跳过了。真是诸葛连坑。~~<br>
+解决之后所有问题之后的完整代码:
+```
+# 导入包， 导入数据
+import tensorflow as tf
+import matplotlib.pyplot as plt
+(x, y), (x_val, y_val) = datasets.mnist.load_data()
+x = tf.reshape(x, [-1, 28*28])   
+x = tf.cast(x, tf.float32)      
+x = 2*x/255-1    
+y = tf.convert_to_tensor(y, dtype=tf.int32) 
+y = tf.one_hot(y, depth=10) 
+
+# 初始化神经网络， 初始化训练轮数，步长
+w1 = tf.Variable(tf.random.truncated_normal([784, 256], stddev=0.1)) 
+b1 = tf.Variable(tf.zeros([256]))
+w2 = tf.Variable(tf.random.truncated_normal([256, 128], stddev=0.1)) 
+b2 = tf.Variable(tf.zeros([128]))
+w3 = tf.Variable(tf.random.truncated_normal([128, 10], stddev=0.1)) 
+b3 = tf.Variable(tf.zeros([10]))
+loss_list= []  
+Epoch = 1000   # 总训练轮数
+lr = 0.003     # 每次调整的步长
+
+# 训练开始
+for i in range(Epoch):
+  with tf.GradientTape() as tape:
+    h1 = x@w1 + tf.broadcast_to(b1, [x.shape[0], 256]) 
+    h1 = tf.nn.relu(h1) 
+    h2 = h1@w2 + b2
+    h2 = tf.nn.relu(h2）
+    out = h2@w3 + b3
+    loss = tf.square(y- out)
+    loss = tf.reduce_mean(loss)
+    if i% 20 == 0:    
+      loss_list.append(loss)    #每隔20次循环记录一次误差
+    grads = tape.gradient(loss, [w1, b1, w2, b2, w3, b3])
+    w1.assign_sub(lr * grads[0]) 
+    b1.assign_sub(lr * grads[1])
+    w2.assign_sub(lr * grads[2]) 
+    b2.assign_sub(lr * grads[3]) 
+    w3.assign_sub(lr * grads[4]) 
+    b3.assign_sub(lr * grads[5])
+
+# 描绘误差
+plt.plot(loss_list)
+plt.show()
+print(loss_list[-1])
+
+# 验证阶段
+x_val = 2*tf.convert_to_tensor(x_val)/255-1  
+x_val = tf.reshape(x_val, [-1,28*28])
+h1 = x_val@w1+b1
+h1 = tf.nn.relu(h1)
+h2 = h1@w2+b2
+h2 = tf.nn.relu(h2)
+y_pred = h2@w3+b3 
+
+# 得到的预测值，解码，并与真实值比较。
+decode_y =  tf.argmax(y_pred, axis = 1)
+print("预测结果：\n", decode_y[:100])
+print("真实值：\n", y_val[:100])  #看一下前100个的预测结果。
+```
+神经网络的误差是`tf.Tensor(0.09139292, shape=(), dtype=float32)`,大概是0.1左右的误差
+<img src = "./pics/loss_list.png"><br>
+查看预测的前100个预测与真实的比对结果: 看得出来，还是有不少错误的。<br>
+```
+预测结果：
+ tf.Tensor(
+[7 1 1 6 4 1 9 1 4 9 0 1 9 0 1 0 4 7 2 0 9 6 1 8 9 9 6 4 0 1 3 1 1 4 7 1 7
+ 1 3 1 1 7 4 1 1 9 6 9 4 4 6 3 4 9 6 6 4 1 9 9 0 2 9 9 7 9 1 4 9 0 7 0 2 8
+ 1 9 9 9 9 7 9 9 2 9 4 4 7 3 6 1 3 6 9 9 1 4 1 7 1 7], shape=(100,), dtype=int64)
+真实值：
+ [7 2 1 0 4 1 4 9 5 9 0 6 9 0 1 5 9 7 3 4 9 6 6 5 4 0 7 4 0 1 3 1 3 4 7 2 7
+ 1 2 1 1 7 4 2 3 5 1 2 4 4 6 3 5 5 6 0 4 1 9 5 7 8 9 3 7 4 6 4 3 0 7 0 2 9
+ 1 7 3 2 9 7 7 6 2 7 8 4 7 3 6 1 3 6 9 3 1 4 1 7 6 9]
+```
+测试一下到底准确率是多少： `测试数据准确率:  0.4672` 还行，如果是随机猜的话准确率应该是0.1<br>
+```
+count = (decode_y == y_val).numpy()
+total = sum(count)
+acc_val = total / 10000
+print("测试数据准确率: ", acc_val)
+```
