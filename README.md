@@ -77,6 +77,8 @@ f(x,y) = 4+(x-2)<sup>2</sup>+2y<sup>2</sup>,它是一个山谷一样的曲面：
 **相关分析 VS. 回归分析**<br>
 相关分析不区分自变量与因变量，只讨论变量之间的共同变化的强度和方向，使用的指标是相关系数；而回归分析区分自变量和因变量，自变量也被称为解释变量，因变量被称为结果变量，通过一定的函数关系式来表达它们之间的关系。相关分析是回归分析的基础，回归分析是相关分析的发展。
 ## Tensorflow
+### [tensorflow v2.2.0的官方文档](https://tensorflow.google.cn/api_docs)
+### [tensorflow民间文档](https://www.w3cschool.cn/tensorflow_python/)
 Tensorflow是一个可以构建机器学习的平台。
 ![](./pics/TFHierarchy.svg)
 <br>高层API易于理解，而且方便使用，但是不够灵活，编程时可能会不能满足特定需求。所以编程时应该尽可能从高级API入手，先让程序运转起来。当遇到需要微调时，再下沉一层，调整具体细节。<br>
@@ -270,14 +272,5 @@ TF的数据中,dtype表示数据精度，shape表示数据纬度。通过.dtype�
 | 自然对数 | tf.math.log(x)  | | |
 | 任意底对数 | <img src="./pics/Screen Shot 2020-07-11 at 22.49.55.png"/>| |TF尚不支持除自然对数之外的对数。可以用换底公式 |
 | 矩阵相乘| @| | 支持Broadcasting机制。矩阵相乘是2维矩阵的相乘。A@B要保证A的最后一维要和B的第一维相通。shape = [4,28,32]与[32,16]相乘， 其实是28 * 32的矩阵与32 * 16的矩阵相乘，得到28 * 16的矩阵。所以最后的张量 shape = [4,28,16]|
-
-
-**高级API， 类** <br>
-**Dense 类** 用来实现全连接层
-```
-fc = layers.Dense(3) # 定义全连接层的输出节点为3
-fc.build(input_shape=(2,4)) # 定义全连接层的输入节点为 4
-fc.kernel # 查看权值矩阵W
-```
-
+| 求平均数 |tf.reduce_mean( input_tensor, axis=None, keep_dims=False, name=None, reduction_indices = None)| tf.reduce_mean(loss)| 用来降维，或者是来求tensor某一维度的均值|
 下面开始[第二个CNN](./second_cnn.md)，用TF来试试吧。
