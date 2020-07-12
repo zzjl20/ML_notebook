@@ -74,4 +74,9 @@ with tf.GradientTape() as tape:
     w3.assign_sub(lr * grads[4]) 
     b3.assign_sub(lr * grads[5])  # 更新所有变量
 ```
-到此位置，没出什么错误，但是当我加上一个loss_list = [],并且把每次loss都加入之后，发现loss_list里面只有一个元素，让我很奇怪，不知道是什么原因，可能我还不了解`with tf.GradientTape() as tape:`它的含义吧。以前成功过一次，loss_list中有一个TF变量，它的shape=[60000,10],应该是60000个y与out的MSE。可是只出现过一次我复制不出来了。
+到此位置，没出什么错误，但是当我加上一个loss_list = [],并且把每次loss都加入之后，发现loss_list里面只有一个元素，让我很奇怪，不知道是什么原因，可能我还不了解`with tf.GradientTape() as tape:`它的含义吧。以前成功过一次，loss_list中有一个TF变量，它的shape=[60000,10],应该是60000个y与out的MSE。可是只出现过一次我复制不出来了。<br>
+目前还有2个任务: 1. 将误差随着训练逐渐降低表示出来。 2.测验数据导入到网络中，看误差。<br>
+# 输出层计算，[b, 128] => [b, 10] ：
+# 输出层计算，[b, 128] => [b, 10] 误差随着
+# 输出层计算，[b, 128] => [b, 10] 训练
+# 输出层计算，[b, 128] => [b, 10] 
