@@ -276,4 +276,18 @@ TF的数据中,dtype表示数据精度，shape表示数据纬度。通过.dtype�
 | 矩阵相乘| @| | 支持Broadcasting机制。矩阵相乘是2维矩阵的相乘。A@B要保证A的最后一维要和B的第一维相通。shape = [4,28,32]与[32,16]相乘， 其实是28 * 32的矩阵与32 * 16的矩阵相乘，得到28 * 16的矩阵。所以最后的张量 shape = [4,28,16]|
 | 求平均数 |tf.reduce_mean( input_tensor, axis=None, keep_dims=False, name=None, reduction_indices = None)| tf.reduce_mean(loss)| 用来降维，或者是来求tensor某一维度的均值|
 
-下面开始[第二个CNN](./second_cnn.md)，用TF来试试吧。
+下面开始[第二个CNN](./second_cnn.md)，用TF来试试吧。第二CNN结束，第四章结束。<br>
+**第五章，TensorFlow 进阶**<br>
+| 概念 | 用途 | 命令 | 例子 |  说明|
+| --- | --- | --- | --- | --- |
+| 拼接 | 将两个部分的数据，拼接为一个整体数据。 | tf.concat(tensors, axis)| tf.concat([a,b],axis=0)|axis表示拼接的轴。非拼接轴必须保证维度一致。拼接不增加维度。shape = [4,35,2]与[6,35,2]在第0轴拼接的结果是 shape = [10,35,2]|
+| 堆叠 | 将数据罗列成数据集 |  tf.stack(tensors, axis) | tf.stack([a,b],axis=0)| 增加新的维度，表示数据集中有多少个数据。数据集的shape必须完全相同。shape=[35,8] 与shape=[35,8]的拼接结果是[2,35,8]|
+| 分割 | 将一个张量拆分成多个分量 | tf.split(x, num_or_size_splits, axis)| | 拼接的逆操作。 num_or_size_splits=n 时，则均分为n份，若是list列表，则按照列表中的分。|
+| 切碎 | 将数据集拆散为单个数据 |tf.unstack(x, axis) | tf.unstack(x,axis=0) | 堆叠的逆操作。将张量按axis轴全部切成0维。切碎之后该维度消失。|
+| 向量范数(Vector Norm）| 查看表征向量“长度” |  tf.norm(x, ord)| | ord = 0,1,np.inf 分别代表查看L1,L2,无穷范数|
+| 最值、均值、和| | tf.reduce_max(x, axis) tf.reduce_mintf.reduce_max(x, axis) tf.reduce_meantf.reduce_max(x, axis) tf.reduce_sumtf.reduce_max(x, axis)| | axis表示查看对应轴 |
+| 极值索引 | 查找最大值/最小值的序列号 | tf.argmax(x, axis) tf.argmin(x, axis)| | 查找在axis轴上的序列。经常用于查看最高概率属于那个类|
+| 比较| 比较2个张量 | tf.equal(a, b) | tf.equal(pred,y) |  |
+| | | | | |
+| | | | | |
+| | | | | |
