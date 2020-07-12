@@ -68,15 +68,13 @@ with tf.GradientTape() as tape:
     loss = tf.reduce_mean(loss)  # 计算误差
     grads = tape.gradient(loss, [w1, b1, w2, b2, w3, b3])  #自动计算梯度
     w1.assign_sub(lr * grads[0])  # assign_sub()是原地更新的意思，将括号内的数值赋值给等号原来
-    b1.assign_sub(lr * grads[1])
+    b1.assign_sub(lr * grads[1])  # lr 就是步长。 要在with之外设置lr
     w2.assign_sub(lr * grads[2]) 
     b2.assign_sub(lr * grads[3]) 
     w3.assign_sub(lr * grads[4]) 
     b3.assign_sub(lr * grads[5])  # 更新所有变量
 ```
-到此位置，没出什么错误，但是当我加上一个loss_list = [],并且把每次loss都加入之后，发现loss_list里面只有一个元素，让我很奇怪，不知道是什么原因，可能我还不了解`with tf.GradientTape() as tape:`它的含义吧。以前成功过一次，loss_list中有一个TF变量，它的shape=[60000,10],应该是60000个y与out的MSE。可是只出现过一次我复制不出来了。<br>
+到此位置，没出什么错误，但是当我加上一个loss_list = [],并且把每次loss都加入之后，发现loss_list里面只有一个元素，让我很奇怪，不知道是什么原因，可能我还不了解`with tf.GradientTape() as tape:`它的含义吧。~~以前成功过一次，loss_list中有一个TF变量，它的shape=[60000,10],应该是60000个y与out的MSE。可是只出现过一次我复制不出来了。~~ 这是个错误的操作，只能得到一个值。我以为这就可以训练好了，但其实不是，这就是一次向前+反向+W，B调整。<br>
 目前还有2个任务: 1. 将误差随着训练逐渐降低表示出来。 2.测验数据导入到网络中，看误差。<br>
-# 输出层计算，[b, 128] => [b, 10] ：
-# 输出层计算，[b, 128] => [b, 10] 误差随着
-# 输出层计算，[b, 128] => [b, 10] 训练
-# 输出层计算，[b, 128] => [b, 10] 
+我好像明白哪里不对了。上述一个`with tf.GradientTape() as tape:`，只计算量一次，向前推导-> 得到误差-> 更新W，B，所以只是得到了一个误差。所以也没loss曲线什么。另外`tf.reduce_mean(loss)`是求平均数的意思。如果想要看到误差趋势，把上面的`with`多做几次，就是循环，就可以看到loss的变化了。 另外还有一点，lr要设置的小一点，我初始设置为0.1，结果`with`4，5遍，误差就变成无限大了。设置成0.01是底线，0，001也是可以的。<br>
+综上，一个`with`外面还要套上多次训练的循环，或者指定误差下降停止限制，才能看到loss的逐渐变小。另外lr的设置，书里也没写。~~从`with`到最后的误差下降图，整整隔了好几步，书中都跳过了。真是诸葛连坑。~~<br>
