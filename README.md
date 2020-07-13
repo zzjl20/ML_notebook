@@ -144,7 +144,7 @@ aa = tf.Variable(a) # 转换为 Variable 类型
 aa.name, aa.trainable # Variable类型张量的属性
 ```
 待优化张量可视为普通张量的特殊类型，普通张量其实也可以通过 GradientTape.watch()方 法临时加入跟踪梯度信息的列表，**从而支持自动求导功能。**<br>
-我觉得，TF支持的自动求导功能，才有了那么一点“电脑是人类智慧的延伸”的感觉。锤子，扳手是手的延伸。而自动求导能替代脑力的繁琐思考，这才是只能的体现。for循环之类的虽然也是节约了脑力，还是太低级了。<br>
+我觉得，TF支持的自动求导功能，才有了那么一点“电脑是人类智慧的延伸”的感觉。锤子，扳手是手的延伸。而自动求导能替代脑力的繁琐思考，这才是智力延伸的体现。for循环之类的虽然也是节约了脑力，还是太低级了。<br>
 #### 创建张量
 记得函数 tf.convert_to_tensor(), tf.constant(), tf.zeros([]), tf.ones([]), tf.zeros_like(), tf.ones_like(), tf.fill(shape, value), tf.random.normal(shape, mean=0.0, stddev=1.0),  tf.random.uniform(shape, minval=0, maxval=None, dtype=tf.float32), 这些可以创建张量，全零/全1张量，正太分布张量，平均分布张量等，具体看[这本书](https://github.com/dragen1860/Deep-Learning-with-TensorFlow-book)的第四章<br>
 循环时用的range函数，用tf.range()来替代,创建序列。<br>
@@ -228,7 +228,7 @@ A = tf.random.normal([32,1]) # 创建矩阵
 tf.broadcast_to(A, [2,32,32,3]) # 扩展为4D张量
 ```
 广播机制很有趣，去本书的第4章好好读一下。<br>
-接下来是加减乘除。TF的+-* /已经被重载过了，// %也重载过了。可以直接加减乘除，整除，求余。tf.pow(x,3)， tf.power(x,n)可以实现x的n次方。 x**2 乘方。x**(0.5) 开平方。 tf.square(x)和 tf.sqrt(x)，平方和平方根。 tf.pow(a, x)或者** 指数运算a<sup>x</sup>。 tf.exp(x), 自然指数e<sup>x</sup>。tf.math.log(x) 自然对数log<sub>e</sub>x。如果计算其他底数的指数，可以用换底公式。目前TF没有任意底的函数。<br>
+接下来是加减乘除。TF的+-* /已经被重载过了，// %也重载过了。可以直接加减乘除，整除，求余。tf.pow(x,3)， tf.power(x,n)可以实现x的n次方。 x** 2 乘方。x ** (0.5) 开平方。 tf.square(x)和 tf.sqrt(x)，平方和平方根。 tf.pow(a, x)或者** 指数运算a<sup>x</sup>。 tf.exp(x), 自然指数e<sup>x</sup>。tf.math.log(x) 自然对数log<sub>e</sub>x。如果计算其他底数的指数，可以用换底公式。目前TF没有任意底的函数。<br>
 **矩阵相乘运算** tf.matmul(a, b)或者@可以进行矩阵相乘。TensorFlow 中的 矩阵相乘可以使用批量方式，也就是张量𝑨和𝑩的维度数可以大于 2。当张量𝑨和𝑩维度数大 于 2 时，TensorFlow 会选择𝑨和𝑩的最后两个维度进行矩阵相乘，前面所有的维度都视作 Batch 维度。根据矩阵相乘的定义，𝑨和𝑩能够矩阵相乘的条件是，𝑨的倒数第一个维度长度(列)和𝑩 的倒数第二个维度长度(行)必须相等。比如张量 a shape:[4,3,28,32]可以与张量 b shape:[4,3,32,2]进行矩阵相乘。
 ```
 a = tf.random.normal([4,3,28,32]) 
