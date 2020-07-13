@@ -251,10 +251,10 @@ TF的数据中,dtype表示数据精度，shape表示数据纬度。通过.dtype�
 |  ----  | ----  | ----  | ---- |
 | 判断是否是TF张量 |tf.is_tensor（a） | |返回普通的True， False， 而不是TF的布尔型 |
 | 精度转换 | tf.cast(a, tf.double) || 将原本dtype= float32的a张量转化为float64， **注意**，布尔型也可以转变成整形|
-| 纬度转换 | tf.reshape(x, new_shape) |tf.reshape(x,[2,-1]) |参数−1表示当前轴上长度需要根据张量总元素不变的法则自动推导,总数据除以各个分量，最后剩下的就是 |
+| 纬度转换 | tf.reshape(x, new_shape) |tf.reshape (x,[2,-1]) |参数−1表示当前轴上长度需要根据张量总元素不变的法则自动推导,总数据除以各个分量，最后剩下的就是 |
 | 增加维度 | tf.expand_dims(x, axis) | | 在指定的 axis 轴前可以插入一个新的维度, 如果axis比最高纬度（从0开始计算）还高1，那么就插在最末尾|
 | 删除维度 | tf.squeeze(x, axis)| | axis为纬度索引号 |
-| 交换维度 | tf.transpose(x, perm)| tf.transpose(x,perm=[0,3,1,2])| x原先的[0,1,2,3]变成了[0,3,1,2]|
+| 交换维度 | tf.transpose(x, perm)| tf.transpose(x,perm =[0,3,1,2])| x原先的[0,1,2,3]变成了[0,3,1,2]|
 | 复制维度 | tf.tile(x, multiples) | | multiples 分别指 定了每个维度上面的复制倍数，对应位置为 1 表明不复制，为 2 表明新长度为原来长度的 2 倍，即数据复制一份，以此类推。若原来shape=[m,n], multiples = [a,b], 则复制后的shape= [am, bn]|
 | 待优化张量| tf.Variable(a)| | 一般，神经网络中间层𝑾 和𝒃需要优化，而输入输入𝑿则不需要优化。有name和trainable属性，是待优化张量特有的|
 | 转化成为张量 |tf.convert_to_tensor(a) | | a是数组或者普通数组，或者是Numpy Array对象。 tf.constant(a)也有同样的作用|
