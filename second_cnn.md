@@ -30,7 +30,6 @@ b3 = tf.Variable(tf.zeros([10]))
 x1 = tf.reshape(x, [-1, 28*28]) # x原先是numpy.ndarray类型，但是也有shape，x.shape = [60000,28,28] 60000个28*28的图片
 x1 = tf.cast(x1, tf.float32)  # 然后将x直接变成tensor,然后还reshape了一下，之后x变为shape = [60000, 784],可以和w1矩阵相乘。
 x1 = 2*x1/255-1      #　将int转化为float32， 然后缩放至-1～1
-
 x2 = 2*tf.convert_to_tensor(x, dtype=tf.float32)/255.-1  # 方法之二，先缩放，再reshape
 x2 = tf.reshape(x2, [-1, 28*28])
 
@@ -161,3 +160,8 @@ total = sum(count)
 acc_val = total / 10000
 print("测试数据准确率: ", acc_val)
 ```
+### 总结
+1. 新技术使用了google drive的GPU运算，又用了TF自动求导。速度大大加快了
+2. 对最后验证阶段，是自己摸索的，不知道是否正确。
+3. 步长过大不光是迈过极值点这么简单，还能导致误差越来越大。
+
