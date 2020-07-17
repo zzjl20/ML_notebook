@@ -287,7 +287,14 @@ TF的数据中,dtype表示数据精度，shape表示数据纬度。通过.dtype�
 | 向量范数(Vector Norm）| 查看表征向量“长度” |  tf.norm(x, ord)| | ord = 0,1,np.inf 分别代表查看L1,L2,无穷范数|
 | 最值、均值、和| | tf.reduce_max(x, axis) tf.reduce_mintf.reduce_max(x, axis) tf.reduce_meantf.reduce_max(x, axis) tf.reduce_sumtf.reduce_max(x, axis)| | axis表示查看对应轴 |
 | 极值索引 | 查找最大值/最小值的序列号 | tf.argmax(x, axis) tf.argmin(x, axis)| | 查找在axis轴上的序列。经常用于查看最高概率属于那个类|
-| 比较| 比较2个张量 | tf.equal(a, b) | tf.equal(pred,y) |  |
+| 比较 | 比较2个张量 | tf.equal(a, b) | tf.equal(pred,y) |  |
+| 填充 | 将张量的左右填充无意义的数据，使得数据长度适合算法 | tf.pad(x, paddings) |tf.pad(b, [[0,2]])|paddings是[Left Padding, Right Padding]的list。例子表示在b的左边填充0个右边填充2个。 |
+| 复制 | 复制长度为1的维度| tf.tile(x, multiples)| | 之前介绍过 |
+| 数据限幅| 截断数据上下限 |  tf.maximum(x, a) tf.minimum(x, a)| | |
+
+高级函数
+| 概念 | 用途 | 命令 | 例子 | 说明 |
+| --- | --- | --- | --- | --- |
+| 收集| 指定维度上按序号抽取数据 | tf.gather(x,[],axis)| | 收集张量x在axis纬度上，list内所对应的序列，然后合并成一个张量|
 | | | | | |
-| | | | | |
-| | | | | |
+
