@@ -17,7 +17,7 @@ x<sub>i</sub>w<sub>i</sub>+b<sub>i</sub> = h<sub>i</sub><br>
 将3个偏微分代入，可得对w<sub>41</sub>的偏导数。同理w<sub>42</sub>,w<sub>43</sub>,b<sub>41</sub>都可求：
 <img src="./pics/Screen Shot 2020-06-29 at 0.27.04.png"><br>
 由上式可知，除了最终结果o<sub>4</sub>, 中间变量h<sub>4</sub>,o<sub>1,2,3</sub>,这些也也会用到，所以之前的运算要记录这些变量。<br>
-对第一列节点w<sub>1</sub>,b<sub>1</sub>的偏导数同理，继续求偏导数即可。<br>
+对第一列节点w<sub>1</sub>,b<sub>1</sub>的偏导数同理，继续求偏导数即可。**注意此处图片有错，但是代码写的是对的。先挖一个坑，等我有时间把这里的错误改正了。**<br>
 <img src="./pics/Screen Shot 2020-06-29 at 9.49.45.png"><br>
 <img src="./pics/Screen Shot 2020-06-29 at 10.38.48.png"><br>
 <img src="./pics/Screen Shot 2020-06-29 at 10.39.26.png"><br>
