@@ -59,7 +59,7 @@ class neuron:
     def __init__(self, n):  #n表示可以接受几个x做输入
         self.weight = [np.random.normal() for _ in range(n+1)]  #随机初始化w和b，b就是weight的最后一个量，待会做点乘时候最后点乘一个“1”就行
     def feedforward(self, x):      # 一个节点最基本的功能，将4个x运算成一个输出。
-        xx = np.appdn(x,1)
+        xx = np.appden(x,1)
         h,o =np.dot(xx, self.weight)
         return (h,o)          #要记录o和h，作为之后反向推要用
     def adjust(self, w):  #提供调整w和b的函数
