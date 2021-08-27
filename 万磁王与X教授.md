@@ -1,6 +1,6 @@
 # 万磁王 vs. X教授
 <img src = "https://i.ytimg.com/vi/ZzS1szIFa7Y/hqdefault.jpg">
-看完了《X man: Fisrt class》，描述了万磁王与X教授是如何结识，又是如何因为理念不同分道扬镳的。剧中万磁王与X教授的观点之争，历史上早已发生过，看[知乎这个帖子](https://zhuanlan.zhihu.com/p/68472985)。<br>
+看完了《X man: Fisrt class》，描述了万磁王与X教授是如何结识，又是如何因为理念不同分道扬镳的。剧中万磁王与X教授的观点之争，历史上早已发生过，看[知乎这个帖子]。<br>(https://zhuanlan.zhihu.com/p/68472985) 。<br>
 首先梳理一下二人各自的观点，再说明我站队哪一边。<br>
 
 X 教授:<br>
